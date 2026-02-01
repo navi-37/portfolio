@@ -1,0 +1,418 @@
+/Al ejecutar el programa el primer input es para ingresar el tamaño de los arrays
+/(se asume que el usuario ingresará un numero entre 1 y 10 inclusive)
+/se procede entonces a solicitar los numeros que se desea ingresar en en arreglo1
+/y luego en el arreglo2.
+/Al terminar de ingresar los numeros pasamos al menu, donde ingresando 0, 1, 2, 3 y 4
+/se ejecutan las consignas solicitadas y si se ingresa cualquier otro número el programa
+/se dirige otra vez al menu hasta que se ingresa un valor válido.
+/Funcionalidades:
+/0 - imprime arreglo 3
+/1 - copia a1 en a3 y lo ordena de menor a mayor
+/2 - suma los elementos de a1 con los de a2 en a3 --> a3=a1+a2
+/3 - multiplica los elementos de a1 con los de a2 en a3, suma los elementos de a3 en la variable prodcart y la imprime.
+/4 - divide los elementos correspondientes de a1 con los de a2 en a3, suma los elementos de a3 en la variable divcart y la imprime.
+
+jump	main
+
+/inicializacion de arreglos
+/máximo 10 elementos en cada arreglo
+arr1,	DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+
+arr2,	DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+
+arr3,	DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+        DEC 0
+
+/posicion de memoria inicial de cada arreglo
+pos1const,		HEX 001
+pos1,			HEX 001
+pos2const,		HEX 00B
+pos2,			HEX	00B
+pos3const,		HEX 015
+pos3,			HEX 015
+
+/variables
+entrada_menu,	DEC 0
+bandera,		DEC -1
+pos,			HEX 0
+cero,			DEC 0
+uno,			DEC 1
+dos,			DEC 2
+tres,			DEC 3
+cuatro,			DEC 4
+tam,			DEC 0
+const_tam, 		DEC 0
+cont,			DEC 0
+cont2,			DEC 0
+cantElem,		DEC 0
+suma,			DEC 0
+indice,			DEC 0
+vueltas, 		DEC 0
+pos_siguiente, 	DEC 0
+pos_ii,			DEC 0  			/pos inicial + indice
+elemento1, 		DEC 0
+elemento2, 		DEC 0
+resultado,		DEC 0
+x,				DEC 0
+y, 				DEC 0
+z, 				DEC 0
+prodcart,		DEC 0
+divcart,		DEC 0
+
+/INICIO DEL PROGRAMA
+main, 		input				/ingresar tam
+			store	tam			/guardar tamaño en tam
+			store	const_tam 	/variable tam que no se va a tocar
+		
+arreglo1,	load	pos1
+			Store 	indice	
+			input 				/ingresar elemento
+            storeI	pos1
+            load 	indice
+            Add 	uno
+            Store	pos1   
+            load	tam			/cargo tam
+            subt	uno			/le resto 1
+            store	tam			/lo guardo
+            skipcond 400 		/si tam == 0
+            jump	arreglo1 	/salto esta linea	
+            load 	const_tam
+            store 	tam
+            load 	cero
+            Store 	indice
+
+arreglo2,	load	pos2
+			Store 	indice	
+			input				/ingresar elemento
+            storeI	pos2
+            load 	indice
+            Add 	uno
+            Store	pos2
+            load	tam			/cargo tam
+            subt	uno			/le resto 1
+            store	tam			/lo guardo
+            skipcond 400 		/si tam == 0
+            jump	arreglo2 	/salto esta linea
+            
+menu,		input
+            store 	entrada_menu
+            load 	entrada_menu
+            subt	cuatro
+            skipcond 800
+            jump 	op0
+            jump 	menu
+
+op0,		load	entrada_menu  /imprime arreglo 3
+            skipcond 400
+            jump	op1
+            jump 	opcion0
+            
+op1,		load	entrada_menu  /copia a1 en a3 y lo ordena
+            subt	uno
+            skipcond 400
+            jump	op2
+            Jump 	opcion1
+		
+op2,		load	entrada_menu  /sumar los elementos de a1 con los de a2 en el arreglo3 --> a3=a1+a2
+            subt	dos
+            skipcond 400
+            jump	op3
+            jump 	opcion2
+            
+op3,		load	entrada_menu  /multiplicar los elementos de a1 con los de a2 en a3, y sumar los elem de a3 en la variable prodcart
+            subt	tres
+            skipcond 400
+            jump	op4
+            jump 	opcion3
+
+op4,		load	entrada_menu /Dividir los elementos correspondientes de a1 con los de a2 en a3 y sumar los elementos de a3 en la variable divcart
+            subt	cuatro
+            skipcond 400
+            jump	menu
+			jump 	opcion4
+			
+opcion0,	load 	const_tam
+			store 	tam
+			load 	pos3const
+			store 	pos3
+            
+imp_arr,	loadI	pos3
+            output
+            load 	pos3
+            add 	uno
+            Store 	pos3
+            load 	tam
+            subt 	uno
+            store 	tam
+            Skipcond 400
+            jump 	imp_arr
+            jump 	menu
+			
+opcion1,    load  	pos1const
+            store 	pos1
+            Load  	pos3const
+            store 	pos3
+            load 	const_tam
+			store 	tam
+
+copiaa1a3,	loadI 	pos1
+			storeI	pos3
+            Load 	pos1
+            Add 	uno
+            store 	pos1
+            load 	pos3
+            add 	uno
+            Store 	pos3
+            load	tam
+            subt	uno
+            store	tam
+            skipcond 400
+            jump 	copiaa1a3
+            jump 	ordenar
+            
+ordenar,	clear
+			store 	cont2
+			load 	pos3const 
+			store 	pos_siguiente
+            subt 	uno
+            store 	pos_ii 		/pos inicial + indice
+            load 	vueltas
+            add 	uno
+            store 	vueltas
+            subt 	const_tam
+			skipcond 400
+            jump 	seguir2
+          	jump 	menu
+            
+seguir2,	load 	cont2
+			add 	uno
+            store 	cont2
+            subt 	const_tam
+            skipcond 000
+            jump 	ordenar 
+            load	pos_siguiente
+			store 	pos_ii
+            add 	uno
+            store 	pos_siguiente
+            LoadI 	pos_ii
+            store 	elemento1
+            loadI 	pos_siguiente
+            store 	elemento2
+			subt 	elemento1
+            skipcond 800
+            jns 	cambio
+			jump 	seguir2
+			
+cambio, 	DEC 0
+          	load 	elemento1
+            storeI 	pos_siguiente
+            load 	elemento2
+            storeI 	pos_ii
+            jumpI 	cambio 
+		
+loop4, 		loadI 	pos_ii
+            load 	pos_ii
+            add 	uno
+            store 	pos_ii
+            load 	cont2
+            add 	uno
+            store 	cont2
+            subt 	const_tam
+            skipcond 400
+            jump 	loop4 
+            jump 	menu
+      
+opcion2,	load  	pos1const
+            store 	pos1
+            Load  	pos2const
+			store 	pos2
+            Load  	pos3const
+            store 	pos3
+            load  	const_tam
+			store 	tam
+            
+loop,       loadI 	pos1
+			addI	pos2
+			StoreI 	pos3
+            Load  	pos1
+            add 	uno
+            store 	pos1
+            Load  	pos2
+            add 	uno
+            store 	pos2 
+            Load  	pos3
+            add 	uno
+            store 	pos3
+            load 	tam
+            subt 	uno
+            store 	tam
+            Skipcond 400
+            jump 	loop
+            jump 	menu
+            
+opcion3,	Load  	cero
+			store 	cont
+			load  	pos1const
+            store 	pos1
+            Load  	pos2const
+			store 	pos2
+            Load  	pos3const
+            store 	pos3
+            load  	const_tam
+			store 	tam
+                       
+multipl,    loadI	pos1	
+            store 	x
+            loadI	pos2
+            store 	y
+            Jns		mult
+            load 	z          
+            storeI 	pos3
+            load 	pos3
+            add 	uno
+            store 	pos3
+            load 	pos2
+            add 	uno
+            store 	pos2
+            load 	pos1
+            add 	uno
+            store 	pos1
+            load 	tam
+            subt 	uno
+            store 	tam
+            skipcond 400
+            jump 	multipl
+            jump 	sumapcart
+                
+mult, 		DEC 0
+            Load 	cero
+            Store 	z
+            Load 	x
+            Subt 	uno
+            Store 	cont
+            
+loop2, 		Load 	z
+            Add 	y
+            Store 	z
+            Load 	cont
+            Subt 	uno
+            Store 	cont
+            Skipcond 000
+            Jump 	loop2
+            JumpI 	mult            
+
+sumapcart,	load 	pos3const
+			store 	pos3
+			load 	const_tam
+			store 	tam
+            
+loop3,		LoadI 	pos3
+            add		prodcart
+            Store 	prodcart
+			Load 	pos3
+            Add 	uno
+            Store 	pos3
+            Load 	tam
+            subt 	uno
+            store 	tam
+			skipcond 400
+            jump 	loop3
+            Load    prodcart
+            output
+            jump 	menu
+            
+opcion4,	Load  	cero
+			store 	cont
+			load  	pos1const
+            store 	pos1
+            Load  	pos2const
+			store 	pos2
+            Load  	pos3const
+            store 	pos3
+            load  	const_tam
+			store 	tam
+          
+carga,		loadI 	pos1
+            store 	x
+            loadI 	pos2
+            store 	y
+            load 	cero
+            store 	resultado
+          
+loop5,		load 	x
+            subt 	y
+            skipcond 000
+            jump 	sumo1
+            jump 	cargares
+
+sumo1,		store 	x
+            load 	resultado
+            add 	uno
+            store 	resultado
+            jump 	loop5
+
+
+cargares,	load 	resultado
+           	storeI 	pos3 
+            load 	pos3
+            add 	uno
+            store 	pos3
+            load 	pos2
+            add 	uno
+            store 	pos2
+            load 	pos1
+            add 	uno
+            store 	pos1
+            load 	tam
+            subt 	uno
+            store 	tam
+            skipcond 400
+            jump 	carga
+            jump 	sumadiv
+
+sumadiv,  	load 	pos3const
+            store 	pos3
+            load 	const_tam
+            store 	tam
+            
+loop6,		LoadI 	pos3
+            add		divcart
+            Store 	divcart
+            Load 	pos3
+            Add 	uno
+            Store 	pos3
+            Load 	tam
+            subt 	uno
+            store 	tam
+            skipcond 400
+            jump 	loop6
+            Load 	divcart
+            output 
+            jump 	menu
+			
