@@ -146,7 +146,7 @@ const projectsData = [
         `,
         tags: ["Redes", "Sockets", "TCP", "UDP", "Python"],
         codePaths: [
-            { name: "Cliente", path: "codigo/redes-mensajeria.py" }
+            { name: "mensajeria-redes.py", path: "codigo/redes-mensajeria.py" }
         ],
         language: "Python",
         letraUrl: "letras/redes2024-lab.pdf"
@@ -199,6 +199,8 @@ const projectsData = [
             `,
         tags: ["C", "C++", "Filesystem", "MS-DOS"],
         letraUrl: "letras/eda2023-ob.pdf",
+        videoUrl: "https://youtu.be/6uMtlemFyP8",
+        codeUrl: "https://github.com/navi-37/filesystem-eda"
     },
     {
         id: 9,
@@ -224,7 +226,7 @@ const projectsData = [
             `,
 
         tags: ["Assembly", "MARIE", "Arquitectura"],
-        demoUrl: "https://marie.js.org/",
+        videoUrl: "https://youtu.be/mX7AE6Ev3WE",
         language: "marie", // Especificar lenguaje para syntax highlighting
         codePaths: [
             { name: "labMARIE", path: "codigo/arquitectura-labMARIE.txt" }
