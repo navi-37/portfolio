@@ -82,7 +82,7 @@ const projectsData = [
             <li>El desarrollo de una solución completa, desde el backend hasta la visualización</li>
             </ul>
         `,  
-        tags: ["SIG", "WMS/WFS", "PostgreSQL", "PostGIS", "GeoServer", "Spring Boot", "React", "OpenLayers"],
+        tags: ["SIG", "WMS/WFS", "PostgreSQL", "PostGIS", "pgRouting", "GeoServer", "Spring Boot", "React", "OpenLayers"],
         images: ["imagenes/tsig/diag.png", "imagenes/tsig/clases.png", "imagenes/tsig/mer.png"],
         letraUrl: "letras/TSIG 2025 - Letra Tecnologo.pdf",
         videoUrl:"https://youtu.be/SPYLT8KJUvg"
@@ -148,6 +148,7 @@ const projectsData = [
         codePaths: [
             { name: "mensajeria-redes.py", path: "codigo/redes-mensajeria.py" }
         ],
+        images: ["imagenes/redes/captura-desktop.png", "imagenes/redes/captura-thinkpad.png"],
         language: "Python",
         letraUrl: "letras/redes2024-lab.pdf"
     },
