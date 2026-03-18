@@ -1,4 +1,42 @@
-// Función para convertir URL de YouTube a URL de embed
+// ── Theme toggle ──────────────────────────────────────────────────────────────
+
+const SUN_ICON  = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+const MOON_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+const ICON_CHEVRON  = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
+
+// ── Link icons ────────────────────────────────────────────────────────────────
+const ICON_EXTERNAL = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>`;
+const ICON_VIDEO    = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+const ICON_IMAGES   = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+const ICON_CODE     = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
+const ICON_DOC      = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+
+    const prismLight = document.getElementById('prism-light');
+    const prismDark = document.getElementById('prism-dark');
+    if (prismLight && prismDark) {
+        prismLight.media = theme === 'dark' ? 'not all' : 'all';
+        prismDark.media = theme === 'dark' ? 'all' : 'not all';
+    }
+
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+        btn.innerHTML = theme === 'dark' ? SUN_ICON : MOON_ICON;
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+    }
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+// ── Función para convertir URL de YouTube a URL de embed ──────────────────────
 function getYouTubeEmbedUrl(url) {
     // Extraer el ID del video de diferentes formatos de URL de YouTube
     const patterns = [
@@ -32,7 +70,7 @@ function renderProjects() {
                     <div class="project-title">${project.title}</div>
                     <div class="project-description">${project.summary || project.description}</div>
                 </div>
-                <span class="project-toggle">›</span>
+                <span class="project-toggle">${ICON_CHEVRON}</span>
             </div>
             <div class="project-content">
                 <div class="project-details">
@@ -43,29 +81,14 @@ function renderProjects() {
                         </div>
                     ` : ''}
                     <div class="project-links">
-                        ${project.letras ? project.letras.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="project-link">${l.name}</a>`).join('') : (project.letraUrl ? `<a href="${project.letraUrl}" target="_blank" rel="noopener noreferrer" class="project-link">Propuesta</a>` : '')}
-                        ${project.reportUrl ? `<a href="${project.reportUrl}" target="_blank" rel="noopener noreferrer" class="project-link">Informe Final</a>` : ''}
-                        ${project.images && project.images.length > 0 ? `
-                            <button class="project-link project-link--images" 
-                                    data-project-id="${project.id}">
-                                Imágenes
-                            </button>
-                        ` : ''}
-                        ${project.videoUrl || project.videoPaths ? `
-                            <button class="project-link project-link--video" 
-                                    data-project-id="${project.id}">
-                                Video demo
-                            </button>
-                        ` : ''}
-                        ${project.demoUrl && !project.videoUrl ? `<a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="project-link">Video demo</a>` : ''}
-                        ${project.codePaths ? `
-                            <button class="project-link project-link--code" 
-                                    data-project-id="${project.id}">
-                                Código
-                            </button>
-                        ` : ''}
-                        ${project.codeUrl ? `<a href="${project.codeUrl}" target="_blank" rel="noopener noreferrer" class="project-link">Repositorio</a>` : ''}
-                        ${project.linkedInUrl ? `<a href="${project.linkedInUrl}" target="_blank" rel="noopener noreferrer" class="project-link">LinkedIn</a>` : ''}
+                        ${project.letras ? project.letras.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="project-link">${ICON_DOC}${l.name}</a>`).join('') : (project.letraUrl ? `<a href="${project.letraUrl}" target="_blank" rel="noopener noreferrer" class="project-link">${ICON_DOC}Propuesta</a>` : '')}
+                        ${project.reportUrl ? `<a href="${project.reportUrl}" target="_blank" rel="noopener noreferrer" class="project-link">${ICON_DOC}Informe Final</a>` : ''}
+                        ${project.images && project.images.length > 0 ? `<button class="project-link project-link--images" data-project-id="${project.id}">${ICON_IMAGES}Imágenes</button>` : ''}
+                        ${project.videoUrl || project.videoPaths ? `<button class="project-link project-link--video" data-project-id="${project.id}">${ICON_VIDEO}Video demo</button>` : ''}
+                        ${project.demoUrl && !project.videoUrl ? `<a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="project-link">${ICON_VIDEO}Video demo</a>` : ''}
+                        ${project.codePaths ? `<button class="project-link project-link--code" data-project-id="${project.id}">${ICON_CODE}Código</button>` : ''}
+                        ${project.codeUrl ? `<a href="${project.codeUrl}" target="_blank" rel="noopener noreferrer" class="project-link">${ICON_EXTERNAL}Repositorio</a>` : ''}
+                        ${project.linkedInUrl ? `<a href="${project.linkedInUrl}" target="_blank" rel="noopener noreferrer" class="project-link">${ICON_EXTERNAL}LinkedIn</a>` : ''}
                     </div>
                 </div>
             </div>
@@ -77,19 +100,23 @@ function renderProjects() {
         header.addEventListener('click', function() {
             const projectItem = this.closest('.project-item');
             const isExpanded = projectItem.classList.contains('expanded');
-            
+
             // Cerrar todos los demás proyectos
             document.querySelectorAll('.project-item').forEach(item => {
                 if (item !== projectItem) {
                     item.classList.remove('expanded');
+                    item.querySelector('.project-content').style.maxHeight = '0';
                 }
             });
-            
+
             // Toggle del proyecto clickeado
+            const content = projectItem.querySelector('.project-content');
             if (isExpanded) {
                 projectItem.classList.remove('expanded');
+                content.style.maxHeight = '0';
             } else {
                 projectItem.classList.add('expanded');
+                content.style.maxHeight = content.scrollHeight + 'px';
             }
         });
     });
@@ -329,6 +356,11 @@ function closeVideoModal() {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar botón de tema con el estado actual
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(currentTheme);
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
     renderProjects();
 
     // Event listeners para el modal de código
@@ -432,4 +464,21 @@ document.addEventListener('DOMContentLoaded', function() {
             openVideoModal(projectId);
         }
     });
+
+    // Swipe táctil en el modal de imágenes
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    imagesModal.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    imagesModal.addEventListener('touchend', function(e) {
+        const deltaX = e.changedTouches[0].clientX - touchStartX;
+        const deltaY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+            deltaX < 0 ? showNextImage() : showPrevImage();
+        }
+    }, { passive: true });
 });

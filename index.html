@@ -8,13 +8,31 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link id="prism-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link id="prism-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" media="not all">
+    <script>
+        (function() {
+            var saved = localStorage.getItem('theme');
+            var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                document.getElementById('prism-light').media = 'not all';
+                document.getElementById('prism-dark').media = 'all';
+            }
+        })();
+    </script>
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="header__title">Portfolio - Iván Castro</h1>
-            <p class="header__subtitle">Lista de proyectos y trabajos en los que he participado en estos últimos años.</p>
+            <div class="header__inner">
+                <div class="header__text">
+                    <h1 class="header__title">Portfolio - Iván Castro</h1>
+                    <p class="header__subtitle">Lista de proyectos y trabajos en los que he participado en estos últimos años.</p>
+                    <a href="mailto:ivan10czr@gmail.com" class="header__email">ivan10czr@gmail.com</a>
+                </div>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema"></button>
+            </div>
         </div>
     </header>
 
