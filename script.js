@@ -11,6 +11,9 @@ const ICON_VIDEO    = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height
 const ICON_IMAGES   = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
 const ICON_CODE     = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
 const ICON_DOC      = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+const ICON_MAIL     = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></svg>`;
+const ICON_PHONE    = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>`;
+const ICON_LINKEDIN = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>`;
 
 
 function applyTheme(theme) {
@@ -63,12 +66,17 @@ function renderProjects() {
         return;
     }
 
-    container.innerHTML = projectsData.map(project => `
-        <div class="project-item" data-project-id="${project.id}">
+    container.innerHTML = projectsData.map((project, index) => `
+        <div class="project-item reveal" data-project-id="${project.id}" style="--reveal-delay: ${Math.min(index, 6) * 0.05}s">
             <div class="project-header">
                 <div style="flex: 1;">
                     <div class="project-title">${project.title}</div>
                     <div class="project-description">${project.summary || project.description}</div>
+                    ${project.tags && project.tags.length > 0 ? `
+                        <div class="project-header-tags">
+                            ${project.tags.slice(0, 5).map(tag => `<span>${tag}</span>`).join('')}
+                        </div>
+                    ` : ''}
                 </div>
                 <span class="project-toggle">${ICON_CHEVRON}</span>
             </div>
@@ -354,6 +362,97 @@ function closeVideoModal() {
     document.body.style.overflow = '';
 }
 
+// ── Navegación ────────────────────────────────────────────────────────────────
+const SECTION_IDS = ['sobre-mi', 'proyectos'];
+
+function setActiveNav(id) {
+    document.querySelectorAll('.topnav__link[data-nav]').forEach(link => {
+        link.classList.toggle('is-active', link.dataset.nav === id);
+    });
+}
+
+function initNav() {
+    if ('IntersectionObserver' in window) {
+        // Resaltar en el nav la sección visible
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) setActiveNav(entry.target.id);
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        SECTION_IDS.forEach(id => observer.observe(document.getElementById(id)));
+        observer.observe(document.getElementById('inicio'));
+    }
+
+    // Borde del nav al scrollear
+    const nav = document.querySelector('.topnav');
+    const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+}
+
+// ── Modal de contacto ─────────────────────────────────────────────────────────
+function openContactModal() {
+    const modal = document.getElementById('contact-modal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('.contact-modal__close').focus();
+}
+
+function closeContactModal() {
+    document.getElementById('contact-modal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function initContactModal() {
+    const modal = document.getElementById('contact-modal');
+    const icons = { mail: ICON_MAIL, phone: ICON_PHONE, linkedin: ICON_LINKEDIN };
+    modal.querySelectorAll('[data-icon]').forEach(el => { el.innerHTML = icons[el.dataset.icon]; });
+
+    // Ocultar LinkedIn mientras no tenga URL
+    const linkedin = document.getElementById('contact-linkedin');
+    if (!linkedin.getAttribute('href')) linkedin.closest('.contact-item').hidden = true;
+
+    document.getElementById('contact-open').addEventListener('click', openContactModal);
+    modal.querySelector('.contact-modal__overlay').addEventListener('click', closeContactModal);
+    modal.querySelector('.contact-modal__close').addEventListener('click', closeContactModal);
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && modal.classList.contains('active')) closeContactModal();
+    });
+
+    modal.querySelectorAll('[data-copy]').forEach(button => {
+        button.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(button.dataset.copy);
+                button.textContent = 'Copiado';
+                button.classList.add('is-copied');
+                setTimeout(() => {
+                    button.textContent = 'Copiar';
+                    button.classList.remove('is-copied');
+                }, 1500);
+            } catch (error) {
+                console.error('No se pudo copiar:', error);
+            }
+        });
+    });
+}
+
+function initReveal() {
+    const items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+        items.forEach(el => el.classList.add('is-visible'));
+        return;
+    }
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    items.forEach(el => observer.observe(el));
+}
+
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     // Inicializar botón de tema con el estado actual
@@ -362,6 +461,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
     renderProjects();
+    document.getElementById('projects-count').textContent = projectsData.length;
+    initNav();
+    initContactModal();
+    initReveal();
 
     // Event listeners para el modal de código
     const codeModal = document.getElementById('code-modal');
@@ -386,8 +489,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listeners para botones "Ver Código Local"
     document.addEventListener('click', async function(event) {
-        if (event.target.classList.contains('project-link--code')) {
-            const projectId = parseInt(event.target.dataset.projectId);
+        const button = event.target.closest('.project-link--code');
+        if (button) {
+            const projectId = parseInt(button.dataset.projectId);
             await openCodeModal(projectId);
         }
     });
@@ -430,8 +534,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listeners para botones "Ver Imágenes"
     document.addEventListener('click', function(event) {
-        if (event.target.classList.contains('project-link--images')) {
-            const projectId = parseInt(event.target.dataset.projectId);
+        const button = event.target.closest('.project-link--images');
+        if (button) {
+            const projectId = parseInt(button.dataset.projectId);
             openImagesModal(projectId);
         }
     });
@@ -459,8 +564,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listeners para botones "Ver Video"
     document.addEventListener('click', function(event) {
-        if (event.target.classList.contains('project-link--video')) {
-            const projectId = parseInt(event.target.dataset.projectId);
+        const button = event.target.closest('.project-link--video');
+        if (button) {
+            const projectId = parseInt(button.dataset.projectId);
             openVideoModal(projectId);
         }
     });
