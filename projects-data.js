@@ -2,7 +2,7 @@
 const projectsData = [
     {
         id: 1,
-        title: "Entorno virtual de aprendizaje ADÁN (Proyecto)",
+        title: "Entorno virtual de aprendizaje ADÁN [Proyecto]",
         summary: "Plataforma virtual de aprendizaje desarrollada como proyecto final de carrera.",
         description: `
             <p>
@@ -45,7 +45,7 @@ const projectsData = [
     },
     {
         id: 2,
-        title: "Tenis 2D",
+        title: "Tenis 2D [DPV2D]",
         summary: "Videojuego de tenis 2D desarrollado con Pygame.",
         description: "Videojuego de tenis 2D desarrollado para la materia optativa \"Desarrollo y programación de videojuegos en 2 dimensiones\" (DPV2D). El desarrollo fue realizado de forma bastante artesanal, utilizando Python y la librería Pygame. Tiene implementado un modo single-player en el que se puede jugar contra un bot y también un modo multijugador para que dos personas jueguen desde un mismo teclado. Dentro del repositorio hay más información sobre el origen de los distintos recursos utilizados en el juego.",
         tags: ["Python", "Pygame", "Pixel Art"],
@@ -55,7 +55,7 @@ const projectsData = [
     },
     {
         id: 4,
-        title: "Sistema de gestión y visualización de paradas y lineas de transporte en rutas nacionales.",
+        title: "Sistema de gestión y visualización de paradas y lineas de transporte en rutas nacionales [TSIG]",
         summary: "Solución para optimizar la gestión de paradas y lineas de transporte dentro de las rutas nacionales.",
         description: `
             <p>
@@ -89,7 +89,7 @@ const projectsData = [
     },
     {
         id: 5,
-        title: "Sitio web de restaurante",
+        title: "Sitio web de restaurante [PHP]",
         summary: "Sitio web para restaurante desarrollado con PHP y MySQL.",
         description: "Sitio web básico desarrollado como laboratorio de la materia optativa \"Desarrollo de sitios web con PHP\". Consiste en una aplicación web para la gestión de un restaurante, donde los usuarios clientes pueden navegar los distintos menús, agregarlos a favoritos, incorporarlos a un carrito, realizar compras y consultar su historial de pedidos. El sistema cuenta con autenticación de usuarios y manejo de roles. El rol administrador dispone de funcionalidades para la gestión de los menús disponibles, incluyendo alta, baja y modificación de productos.",
         tags: ["PHP", "MySQL", "HTML", "CSS", "JavaScript"],
@@ -97,7 +97,7 @@ const projectsData = [
     },
     {
         id: 6,
-        title: "Portal de difusión para refugio de animales",
+        title: "Portal de difusión para refugio de animales [RIA]",
         summary: "Sitio web desarrollado para la materia optativa RIA.",
         description: "Pequeño sitio web estático desarrollado como laboratorio de la materia RIA (Rich Internet Applications). La tematica del sitio era abierta y se decidió desarrollar un portal de difusión de animales en adopción de un refugio ficticio.",
         tags: ["HTML", "CSS", "JavaScript"],
@@ -105,7 +105,7 @@ const projectsData = [
     },
     {
         id: 7,
-        title: "Aplicación de mensajería en red local con sockets",
+        title: "Aplicación de mensajería en red local con sockets [Laboratorio Redes]",
         summary: "Aplicación de mensajería por terminal desarrollada en Python que permite el envío de mensajes y archivos entre dispositivos de una misma red local utilizando sockets UDP y TCP.",
         description: `
             <p>
@@ -154,7 +154,7 @@ const projectsData = [
     },
     {
         id: 133,
-        title: "Laboratorios de Bases de Datos",
+        title: "Laboratorios de Bases de Datos [BD1 y BD2]",
         summary: "Resumen de los laboratorios realizados para las materias Bases de Datos 1 y 2.",
         description: "El objetivo es mostrar el tipo de consultas y desarrollos realizados durante el cursado de estas materias. En BD1, el laboratorio se enfoca en consultas SQL, mientras que en BD2 se avanza en el uso de triggers, stored procedures y cursores.",
         tags: ["SQL", "PostgreSQL", "MySQL"],
@@ -172,7 +172,7 @@ const projectsData = [
     },
     {
         id: 8,
-        title: "Filesystem basado en MS-DOS",
+        title: "Filesystem basado en MS-DOS [EDA]",
         summary: "Mini filesystem con comportamiento y sintaxis similares a sistemas MS-DOS, implementado en C, con algunas extensiones de C++.",
         description: `
             <p> 

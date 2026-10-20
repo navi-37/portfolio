@@ -23,32 +23,196 @@
     </script>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="header__inner">
-                <div class="header__text">
-                    <h1 class="header__title">Portfolio - Iván Castro</h1>
-                    <p class="header__subtitle">Lista de proyectos y trabajos en los que he participado en estos últimos años.</p>
-                    <a href="mailto:ivan10czr@gmail.com" class="header__email">ivan10czr@gmail.com</a>
-                </div>
+    <!-- Navegación fija -->
+    <nav class="topnav">
+        <div class="container topnav__inner">
+            <div class="topnav__links">
+                <a href="#sobre-mi" class="topnav__link" data-nav="sobre-mi">Sobre mí</a>
+                <a href="#proyectos" class="topnav__link" data-nav="proyectos">Proyectos</a>
+                <button type="button" id="contact-open" class="topnav__link topnav__link--cta">Contacto</button>
                 <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema"></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero" id="inicio">
+        <div class="hero__bg" aria-hidden="true"></div>
+        <div class="container hero__inner">
+            <p class="hero__prompt"><span class="hero__prompt-path">~/portfolio</span> $ whoami</p>
+            <h1 class="hero__title">Iván Castro Zeni</h1>
+            <p class="hero__role">Desarrollo de software · Soporte e infraestructura</p>
+          
+            <div class="hero__actions">
+                <a href="#sobre-mi" class="btn btn--primary" data-nav="sobre-mi">Sobre mí</a>
+                <a href="#proyectos" class="btn btn--ghost" data-nav="proyectos">Ver proyectos <span id="projects-count" class="btn__badge"></span></a>
+            </div>
+            <div class="hero__socials">
+                <a href="https://github.com/navi-37" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/ivancastrozeni" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:ivan10czr@gmail.com">ivan10czr@gmail.com</a>
             </div>
         </div>
     </header>
 
     <main class="main">
-        <div class="container">
-            <div id="projects-container" class="projects-list">
-                <!-- aća se cargan los proyectos de forma dinámica -->
+        <!-- Sobre mí -->
+        <section class="section" id="sobre-mi">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__index">01.</span>
+                    <h2 class="section__title">Sobre mí</h2>
+                    <span class="section__line"></span>
+                </div>
+                <div class="about reveal">
+                    <div class="about__text">
+                        <p>
+                            Estudiante avanzado de Tecnólogo en Informática, con formación en desarrollo
+                            de software, bases de datos, sistemas operativos, redes e infraestructura.
+                        </p>
+                        <p>
+                            En desarrollo de software, construí aplicaciones backend, frontend y mobile de punta a punta: 
+                            desde la comprensión del problema y el diseño de la solución, hasta su documentación, 
+                            implementación, pruebas y despliegue en la nube.
+                            Priorizo la escabilidad, mantenibilidad y buenas prácticas de ingeniería de software.
+                        </p>
+                        <p>
+                            En infraestructura, tengo experiencia instalando y configurando sistemas GNU/Linux y Windows,
+                            realizando mantenimiento de equipos, diagnosticando problemas de hardware, software y redes, y gestionando respaldos. 
+                        </p>
+                        <p>
+                            Realizar una pasantía laboral es el único requisito que me resta para finalizar la carrera. Busco incorporarme a un equipo 
+                            técnico donde pueda aportar, asumir nuevos desafíos y seguir aprendiendo.
+                        </p>
+                    </div>
+                    <dl class="about__facts">
+                        <div><dt>Ubicación</dt><dd>Montevideo, Uruguay</dd></div>
+                        <div><dt>Formación</dt><dd>Tecnólogo en Informática<br><span>250 / 252 créditos</span></dd></div>
+                        <div><dt>Cursos</dt><dd>Jóvenes a Programar · Ceibal<br><span>428 h · programación, BD y testing</span></dd></div>
+                        <div><dt>Idiomas</dt><dd>Español nativo · Inglés B2</dd></div>
+                        <div><dt>Habilidades blandas</dt><dd>Comunicación efectiva · Pensamiento crítico · Resolución de problemas · Trabajo en equipo</dd></div>
+                    </dl>
+                </div>
+
+                <h3 class="subsection-title reveal">Conocimientos y herramientas</h3>
+                <div class="skills reveal">
+                    <div class="skills__column">
+                        <h4 class="skills__heading"><span>&lt;/&gt;</span> Desarrollo de software</h4>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Lenguajes</h4>
+                            <div class="skill-group__items"><span>Java</span><span>C#</span><span>Python</span><span>JavaScript</span><span>PHP</span><span>Kotlin</span><span>C</span><span>C++</span><span>SQL</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Backend</h4>
+                            <div class="skill-group__items"><span>Jakarta EE</span><span>Spring Boot</span><span>Hibernate / JPA</span><span>.NET</span><span>ASP.NET Core</span><span>Entity Framework Core</span><span>APIs REST</span><span>SOAP</span><span>JWT</span><span>OAuth 2.0</span><span>OpenAPI / Swagger</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Frontend &amp; Mobile</h4>
+                            <div class="skill-group__items"><span>React</span><span>Vue</span><span>HTML / CSS</span><span>OpenLayers</span><span>Android (Kotlin)</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Bases de datos</h4>
+                            <div class="skill-group__items"><span>PostgreSQL</span><span>SQL Server</span><span>MySQL</span><span>SQLite</span><span>PostGIS</span><span>MongoDB</span><span>Cassandra</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Despliegue y cloud</h4>
+                            <div class="skill-group__items"><span>Docker</span><span>Docker Compose</span><span>Railway</span><span>Render</span><span>Vercel</span><span>Wildfly</span><span>Firebase</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Herramientas</h4>
+                            <div class="skill-group__items"><span>Git</span><span>Postman</span><span>Claude Code</span><span>GeoServer</span><span>QGIS</span></div>
+                        </div>
+                    </div>
+                    <div class="skills__column">
+                        <h4 class="skills__heading"><span>$_</span> Infraestructura y soporte</h4>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Sistemas operativos</h4>
+                            <div class="skill-group__items"><span>GNU/Linux</span><span>Windows</span><span>Instalación y configuración</span><span>Administración</span><span>Backups</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Scripting</h4>
+                            <div class="skill-group__items"><span>Bash</span><span>PowerShell</span><span>Batch</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Redes</h4>
+                            <div class="skill-group__items"><span>TCP/IP</span><span>Direccionamiento IP</span><span>Routers y switches</span><span>Cableado estructurado</span><span>Diagnóstico de conectividad</span><span>SSH</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Soporte técnico y hardware</h4>
+                            <div class="skill-group__items"><span>Diagnóstico de hardware y software</span><span>Armado de equipos</span><span>Mantenimiento y actualización</span><span>Periféricos</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Virtualización</h4>
+                            <div class="skill-group__items"><span>VirtualBox</span><span>VMware</span></div>
+                        </div>
+                        <div class="skill-group">
+                            <h4 class="skill-group__title">Ofimática</h4>
+                            <div class="skill-group__items"><span>Microsoft Office</span><span>LibreOffice</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Proyectos -->
+        <section class="section" id="proyectos">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__index">02.</span>
+                    <h2 class="section__title">Proyectos</h2>
+                    <span class="section__line"></span>
+                </div>
+                <div id="projects-container" class="projects-list">
+                    <!-- aća se cargan los proyectos de forma dinámica -->
+                </div>
+            </div>
+        </section>
     </main>
+
 
     <footer class="footer">
         <div class="container">
             <p>2026 - Iván Castro Zeni - ivan10czr@gmail.com</p>
         </div>
     </footer>
+
+    <!-- Modal de contacto -->
+    <div id="contact-modal" class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+        <div class="contact-modal__overlay"></div>
+        <div class="contact-modal__content">
+            <div class="contact-modal__header">
+                <h3 class="contact-modal__title" id="contact-modal-title">Contacto</h3>
+                <button class="contact-modal__close" aria-label="Cerrar">&times;</button>
+            </div>
+            <ul class="contact-list">
+                <li class="contact-item">
+                    <span class="contact-item__icon" data-icon="mail"></span>
+                    <div class="contact-item__text">
+                        <span class="contact-item__label">Email</span>
+                        <a class="contact-item__value" href="mailto:ivan10czr@gmail.com">ivan10czr@gmail.com</a>
+                    </div>
+                    <button class="contact-item__copy" data-copy="ivan10czr@gmail.com">Copiar</button>
+                </li>
+                <li class="contact-item">
+                    <span class="contact-item__icon" data-icon="phone"></span>
+                    <div class="contact-item__text">
+                        <span class="contact-item__label">Celular</span>
+                        <a class="contact-item__value" href="tel:+59894260137">094 260 137</a>
+                    </div>
+                    <a class="contact-item__copy" href="https://wa.me/59894260137" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                    <button class="contact-item__copy" data-copy="094 260 137">Copiar</button>
+                </li>
+                <!-- TODO: completar con la URL de tu LinkedIn (la fila se oculta mientras href esté vacío) -->
+                <li class="contact-item">
+                    <span class="contact-item__icon" data-icon="linkedin"></span>
+                    <div class="contact-item__text">
+                        <span class="contact-item__label">LinkedIn</span>
+                        <a class="contact-item__value" id="contact-linkedin" href="" target="_blank" rel="noopener noreferrer">Ver perfil</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Modal para mostrar código -->
     <div id="code-modal" class="code-modal">
