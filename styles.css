@@ -433,6 +433,15 @@ html[data-theme="dark"] .btn--primary {
     color: var(--text-secondary);
 }
 
+.about__link {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.about__link:hover {
+    text-decoration: underline;
+}
+
 .subsection-title {
     font-size: 1.125rem;
     font-weight: 600;
