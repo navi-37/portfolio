@@ -180,6 +180,31 @@ html {
 
 .hero__inner {
     position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 2.5rem;
+}
+
+.hero__inner > * {
+    grid-column: 2;
+}
+
+.hero__inner > .hero__photo {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    align-self: center;
+}
+
+.hero__photo {
+    display: block;
+    width: clamp(150px, 18vw, 230px);
+    height: auto;
+    padding: 4px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--bg-primary);
+    box-shadow: var(--shadow-card);
+    user-select: none;
 }
 
 .hero__inner > * {
@@ -1344,6 +1369,21 @@ html[data-theme="dark"] .btn--primary {
     .topnav__link.is-active::after {
         left: 0.5rem;
         right: 0.5rem;
+    }
+
+    .hero__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .hero__inner > * {
+        grid-column: 1;
+    }
+
+    .hero__inner > .hero__photo {
+        grid-column: 1;
+        grid-row: auto;
+        width: 130px;
+        margin-bottom: 1rem;
     }
 
     .about,
